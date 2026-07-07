@@ -31,17 +31,26 @@ jobs:
 
           manifest = Path("android/app/src/main/AndroidManifest.xml")
           content = manifest.read_text(encoding="utf-8")
-          permission = '    <uses-permission android:name="android.permission.INTERNET" />\n'
+          permissions = [
+              '    <uses-permission android:name="android.permission.INTERNET" />\n',
+              '    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />\n',
+          ]
 
-          if "android.permission.INTERNET" not in content:
+          missing = "".join(
+              permission for permission in permissions
+              if permission.split('"')[1] not in content
+          )
+
+          if missing:
               content = content.replace(
                   '<manifest xmlns:android="http://schemas.android.com/apk/res/android">',
-                  '<manifest xmlns:android="http://schemas.android.com/apk/res/android">\n' + permission,
+                  '<manifest xmlns:android="http://schemas.android.com/apk/res/android">\n' + missing,
                   1,
               )
 
           manifest.write_text(content, encoding="utf-8")
           PY
+          grep -n "android.permission" android/app/src/main/AndroidManifest.xml
 
       - name: Install dependencies
         run: flutter pub get
