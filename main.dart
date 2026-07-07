@@ -32,7 +32,7 @@ class Fiber23App extends StatelessWidget {
 }
 
 class ApiClient {
-  static const String baseUrl = 'https://fiber23.it/mobile';
+  static const String baseUrl = 'https://www.fiber23.it/mobile';
 
   String? token;
 
@@ -209,6 +209,12 @@ class _LoginScreenState extends State<LoginScreen> {
                           'Usa le stesse credenziali della tua area clienti Fiber23.',
                           textAlign: TextAlign.center,
                           style: TextStyle(color: Color(0xFF63708A)),
+                        ),
+                        const SizedBox(height: 8),
+                        const Text(
+                          'v1.0.3 - API www.fiber23.it',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(color: Color(0xFF94A3B8), fontSize: 12),
                         ),
                       ],
                     ),
